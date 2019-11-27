@@ -1,0 +1,6 @@
+.idea
+token.txt
+# Project exclude paths
+/.gradle/
+/build/
+/build/classes/java/main/
