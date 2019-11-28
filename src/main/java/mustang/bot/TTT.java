@@ -3,7 +3,7 @@ package mustang.bot;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class TicTacToe extends ListenerAdapter {
+public class TTT extends ListenerAdapter {
 
     private char[][] board;
     private char curPlayer;
@@ -51,9 +51,10 @@ public class TicTacToe extends ListenerAdapter {
                     event.getChannel().sendMessage("Game is a draw! If you want to play again type  \"!ttt").queue();
                 } else if (this.checkForWinner(row, col, curPlayer)) {
                     event.getChannel().sendMessage("Player " + curPlayer + " wins! If you want to play again type  \"!ttt").queue();
+                }else {
+                    this.swapPlayer();
+                    event.getChannel().sendMessage("Player " + curPlayer + " it is your turn!").queue();
                 }
-                this.swapPlayer();
-                event.getChannel().sendMessage("Player " + curPlayer + " it is your turn!").queue();
             }
         }
     }

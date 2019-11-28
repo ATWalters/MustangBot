@@ -20,6 +20,6 @@ public class MustangBot {
         //Adding each event to the listener
         jda.addEventListener(jokeListener);
         jda.addEventListener(new Marco());
-        jda.addEventListener(new TicTacToe());
+        jda.addEventListener(new TTT());
     }
 }
