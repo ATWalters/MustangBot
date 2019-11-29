@@ -1,6 +1,11 @@
+import com.jagrosh.jdautilities.command.CommandClient;
+import com.jagrosh.jdautilities.command.CommandClientBuilder;
 import mustangBot.events.*;
+import mustangBot.commands.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
+
 import java.io.*;
 
 public class MustangBot {
@@ -12,13 +17,31 @@ public class MustangBot {
         String token = br.readLine();
         JDA jda = new JDABuilder( token ).build();
 
+        //Reading discord client id from clientid.txt and adding that to the command client
+        File file2 = new File("D:\\School\\Programming\\Projects\\MustangBot\\clientid.txt");
+        BufferedReader br2 = new BufferedReader(new FileReader(file2));
+        String id = br2.readLine();
+
+
         //Creating new Joke object and calling fillJokes method
         Joke jokeListener = new Joke();
         jokeListener.fillJokes();
 
+        //Making a command client
+        CommandClientBuilder builder = new CommandClientBuilder();
+
+        builder.setOwnerId(id);
+        builder.setPrefix("!");
+        builder.setHelpWord("help");
+
+        //Adding commands to the CommandClientBuilder
+        builder.addCommand(new InviteCommand());
+
+        CommandClient client = builder.build();
         //Adding each event to the listener
         jda.addEventListener(jokeListener);
         jda.addEventListener(new Marco());
         jda.addEventListener(new TTT());
+        jda.addEventListener(client);
     }
 }
