@@ -1,4 +1,4 @@
-package mustang.bot;
+package mustangBot.events;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -15,7 +15,7 @@ public class Joke extends ListenerAdapter {
         if(event.getAuthor().isBot()){
             return;
         }
-        if(messageSent.equalsIgnoreCase( "!Joke")){
+        if(messageSent.equalsIgnoreCase( "Joke")){
             int index = (int)(Math.random()*((this.jokes.size())));
             event.getChannel().sendMessage(this.jokes.get(index)).queue();
         }

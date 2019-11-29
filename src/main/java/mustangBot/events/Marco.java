@@ -1,4 +1,4 @@
-package mustang.bot;
+package mustangBot.events;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -10,7 +10,7 @@ public class Marco extends ListenerAdapter {
         if(event.getAuthor().isBot()){
             return;
         }
-        if(messageSent.equalsIgnoreCase("!Marco")){
+        if(messageSent.equalsIgnoreCase("Marco")){
             event.getChannel().sendMessage("Polo!").queue();
         }
     }

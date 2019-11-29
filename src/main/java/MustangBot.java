@@ -1,5 +1,4 @@
-package mustang.bot;
-
+import mustangBot.events.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import java.io.*;
