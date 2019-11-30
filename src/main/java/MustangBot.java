@@ -1,11 +1,10 @@
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
+import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import mustangBot.events.*;
 import mustangBot.commands.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.OnlineStatus;
-
 import java.io.*;
 
 public class MustangBot {
@@ -22,6 +21,8 @@ public class MustangBot {
         BufferedReader br2 = new BufferedReader(new FileReader(file2));
         String id = br2.readLine();
 
+        //Adding an event waiter
+        EventWaiter waiter = new EventWaiter();
 
         //Creating new Joke object and calling fillJokes method
         Joke jokeListener = new Joke();
@@ -29,7 +30,6 @@ public class MustangBot {
 
         //Making a command client
         CommandClientBuilder builder = new CommandClientBuilder();
-
         builder.setOwnerId(id);
         builder.setPrefix("!");
         builder.setHelpWord("help");
@@ -37,11 +37,14 @@ public class MustangBot {
         //Adding commands to the CommandClientBuilder
         builder.addCommand(new InviteCommand());
 
+        //Building the CommandClient
         CommandClient client = builder.build();
+
         //Adding each event to the listener
         jda.addEventListener(jokeListener);
         jda.addEventListener(new Marco());
         jda.addEventListener(new TTT());
         jda.addEventListener(client);
+        jda.addEventListener(waiter);
     }
 }

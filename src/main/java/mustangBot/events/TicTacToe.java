@@ -8,8 +8,8 @@ public class TicTacToe {
     private int MAX_PLAYS;
     private int plays = 0;
 
-    public static final char PLAYER1 = 'X';
-    public static final char PLAYER2 = 'O';
+    static final char PLAYER1 = 'X';
+    static final char PLAYER2 = 'O';
     private static final char EMPTY = ' ';
     private static final String SEPARATOR = "|";
 
@@ -26,15 +26,15 @@ public class TicTacToe {
         }
     }
 
-    public int getRows(){
+    private int getRows(){
         return ROWS;
     }
 
-    public int getCols(){
+    private int getCols(){
         return COLS;
     }
 
-    public int getNumWin(){
+    private int getNumWin(){
         return NUM_TO_WIN;
     }
 
@@ -56,28 +56,28 @@ public class TicTacToe {
         return str.toString();
     }
 
-    public char whatsAtPos(int r, int c){
+    private char whatsAtPos(int r, int c){
         return board[r][c];
     }
 
-    public boolean checkSpace(int r, int c){
+    boolean checkSpace(int r, int c){
         return board[r][c] == EMPTY;
     }
 
-    public void placeMarker(int r, int c, char player){
+    void placeMarker(int r, int c, char player){
         this.board[r][c] = player;
         this.plays++;
     }
 
-    public boolean checkForDraw(){
+    boolean checkForDraw(){
         return plays == MAX_PLAYS;
     }
 
-    public boolean checkForWinner(int r, int c, char player){
+    boolean checkForWinner(int r, int c, char player){
         return checkHorizontalWin(r, c, player) || checkVerticalWin(r, c, player) || checkDiagonalWin(r, c, player);
     }
 
-    public boolean checkHorizontalWin(int r, int c, char player){
+    private boolean checkHorizontalWin(int r, int c, char player){
         int inARow = 0;
 
         for(int i = 0; i < this.getCols(); i++){
@@ -93,7 +93,7 @@ public class TicTacToe {
         return false;
     }
 
-    public boolean checkVerticalWin(int r, int c, char player){
+    private boolean checkVerticalWin(int r, int c, char player){
         int inARow = 0;
 
         for(int i = 0; i < this.getRows(); i++){
@@ -109,7 +109,7 @@ public class TicTacToe {
         return false;
     }
 
-    public boolean checkDiagonalWin(int r, int c, char player){
+    private boolean checkDiagonalWin(int r, int c, char player){
         int row;
         int col;
         int inARow = 0;
