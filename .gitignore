@@ -4,4 +4,9 @@
 /build/classes/java/main/
 .idea
 token.txt
-clientid.txt
+client.txt
+/gradle/
+build.gradle
+gradlew
+gradlew.bat
+settings.gradle
