@@ -36,6 +36,7 @@ public class MustangBot {
 
         //Adding commands to the CommandClientBuilder
         builder.addCommand(new InviteCommand());
+        builder.addCommand(new TicTacToeCommand(waiter));
 
         //Building the CommandClient
         CommandClient client = builder.build();
@@ -43,7 +44,7 @@ public class MustangBot {
         //Adding each event to the listener
         jda.addEventListener(jokeListener);
         jda.addEventListener(new Marco());
-        jda.addEventListener(new TTT());
+        //jda.addEventListener(new TTT());
         jda.addEventListener(client);
         jda.addEventListener(waiter);
     }

@@ -2,22 +2,28 @@ package mustangBot.events;
 
 public class TicTacToe {
     private char[][] board;
-    private int NUM_TO_WIN;
-    private int ROWS;
-    private int COLS;
-    private int MAX_PLAYS;
+    private int win;
+    private int rows;
+    private int cols;
+    private int max_plays;
     private int plays = 0;
 
-    static final char PLAYER1 = 'X';
-    static final char PLAYER2 = 'O';
+    public static final char PLAYER1 = 'X';
+    public static final char PLAYER2 = 'O';
     private static final char EMPTY = ' ';
     private static final String SEPARATOR = "|";
+    public static final int MIN_NUM_ROWS = 3;
+    public static final int MAX_NUM_ROWS = 20;
+    public static final int MIN_NUM_COLUMNS = 3;
+    public static final int MAX_NUM_COLUMNS = 20;
+    public static final int MIN_WIN = 3;
+    public static final int MAX_WIN = 10;
 
-    TicTacToe(int r, int c, int w){
-        ROWS = r;
-        COLS = c;
-        NUM_TO_WIN = w;
-        MAX_PLAYS = r * c;
+    public TicTacToe(int r, int c, int w){
+        rows = r;
+        cols = c;
+        win = w;
+        max_plays = r * c;
         board = new char[r][c];
         for(int i = 0; i < r; ++i){
             for(int j = 0; j < c; ++j){
@@ -27,27 +33,35 @@ public class TicTacToe {
     }
 
     private int getRows(){
-        return ROWS;
+        return rows;
     }
 
     private int getCols(){
-        return COLS;
+        return cols;
     }
 
     private int getNumWin(){
-        return NUM_TO_WIN;
+        return win;
     }
 
     @Override
     public String toString(){
-        StringBuilder str = new StringBuilder("```   ");
-        for(int i = 0; i < COLS; i++){
-            str.append(i).append(" ");
+        StringBuilder str = new StringBuilder("```    ");
+        for(int i = 0; i < cols; i++){
+            if(i <= 10){
+                str.append(i).append(" ");
+            }else {
+                str.append(i).append(" ");
+            }
         }
         str.append("\n");
-        for(int j = 0; j < ROWS; j++){
-            str.append(j).append(" ");
-            for(int k = 0; k < COLS; k++) {
+        for(int j = 0; j < rows; j++){
+            if(j <= 10) {
+                str.append(" ").append(j).append(" ");
+            }else{
+                str.append(j);
+            }
+            for(int k = 0; k < cols; k++) {
                 str.append(TicTacToe.SEPARATOR).append(whatsAtPos(j, k));
             }
             str.append(TicTacToe.SEPARATOR).append("\n");
@@ -60,20 +74,20 @@ public class TicTacToe {
         return board[r][c];
     }
 
-    boolean checkSpace(int r, int c){
+    public boolean checkSpace(int r, int c){
         return board[r][c] == EMPTY;
     }
 
-    void placeMarker(int r, int c, char player){
+    public void placeMarker(int r, int c, char player){
         this.board[r][c] = player;
         this.plays++;
     }
 
-    boolean checkForDraw(){
-        return plays == MAX_PLAYS;
+    public boolean checkForDraw(){
+        return plays == max_plays;
     }
 
-    boolean checkForWinner(int r, int c, char player){
+    public boolean checkForWinner(int r, int c, char player){
         return checkHorizontalWin(r, c, player) || checkVerticalWin(r, c, player) || checkDiagonalWin(r, c, player);
     }
 
