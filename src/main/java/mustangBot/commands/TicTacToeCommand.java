@@ -2,7 +2,7 @@ package mustangBot.commands;
 
 import com.jagrosh.jdautilities.command.*;
 import com.jagrosh.jdautilities.commons.waiter.*;
-import mustangBot.events.*;
+import mustangBot.logic.*;
 import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.*;
@@ -152,7 +152,7 @@ public class TicTacToeCommand extends Command {
                 event.reply("No game was ongoing!");
             }else{
                 board = null;
-                event.reply("Game has been quit by " + event.getMember().getAsMention() + " if you want to play another game use  \"!ttt\"");
+                event.reply(event.getMember().getAsMention() + " has quit the game!");
             }
         }
     }

@@ -1,4 +1,4 @@
-package mustangBot.events;
+package mustangBot.logic;
 
 public class TicTacToe {
     private char[][] board;
