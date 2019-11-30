@@ -16,7 +16,7 @@ public class MustangBot {
         String token = br.readLine();
         JDA jda = new JDABuilder( token ).build();
 
-        //Reading discord client id from clientid.txt and adding that to the command client
+        //Reading discord client id from client.txt and adding that to the command client
         File file2 = new File("D:\\School\\Programming\\Projects\\MustangBot\\client.txt");
         BufferedReader br2 = new BufferedReader(new FileReader(file2));
         String id = br2.readLine();
