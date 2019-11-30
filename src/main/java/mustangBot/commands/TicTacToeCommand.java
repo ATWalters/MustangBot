@@ -21,54 +21,73 @@ public class TicTacToeCommand extends Command {
 
     public TicTacToeCommand(EventWaiter w){
         this.name = "ttt";
-        this.help = "Starts a game of Tic Tac Toe against another server member";
-        this.aliases = new String[] {"tplace"};
+        this.help = "Starts a game of Tic Tac Toe against another server member. Has commands place and quit.";
+        this.arguments = "[number of rows(optional)] [column(optional)] [number in a row to win(optional)]";
+        this.guildOnly = true;
         this.waiter = w;
+        this.children = new Command[]{
+                new QuitCommand(),
+                new PlaceCommand()
+        };
     }
 
     @Override
     protected void execute(CommandEvent event){
-        String[] messageSent = event.getMessage().getContentRaw().split(" ");
+        String[] messageSent = event.getArgs().split(" ");
 
-        if(messageSent[0].equalsIgnoreCase("!ttt")){
-            initiator = event.getMember();
-            curPlayerName = initiator;
+        initiator = event.getMember();
+        curPlayerName = initiator;
 
-            if(messageSent.length == 4) {
-                if (Integer.parseInt(messageSent[1]) >= TicTacToe.MIN_NUM_ROWS && Integer.parseInt(messageSent[1]) <= TicTacToe.MAX_NUM_ROWS) {
-                    rows = Integer.parseInt(messageSent[1]);
-                } else {
-                    rows = TicTacToe.MIN_NUM_ROWS;
-                }
-                if (Integer.parseInt(messageSent[2]) >= TicTacToe.MIN_NUM_COLUMNS && Integer.parseInt(messageSent[2]) <= TicTacToe.MAX_NUM_COLUMNS) {
-                    columns = Integer.parseInt(messageSent[2]);
-                } else {
-                    columns = 3;
-                }
-                if (Integer.parseInt(messageSent[3]) >= TicTacToe.MIN_WIN && Integer.parseInt(messageSent[3]) <= TicTacToe.MAX_WIN) {
-                    win = Integer.parseInt(messageSent[3]);
-                } else {
-                    win = 3;
-                }
+        if(messageSent.length == 3) {
+            if (Integer.parseInt(messageSent[0]) >= TicTacToe.MIN_NUM_ROWS && Integer.parseInt(messageSent[0]) <= TicTacToe.MAX_NUM_ROWS) {
+                rows = Integer.parseInt(messageSent[0]);
+            } else {
+                rows = TicTacToe.MIN_NUM_ROWS;
             }
-
-            event.reply(initiator.getAsMention() + ", now give me the name of the user to play against. e.g. @MustangBot");
-            waiter.waitForEvent(GuildMessageReceivedEvent.class, e -> e.getAuthor().equals(event.getAuthor()) && e.getChannel().equals(event.getChannel()), e -> {
-                try{
-                    opponent = e.getMessage().getMentionedMembers().get(0);
-                    board = new TicTacToe(rows, columns, win);
-                    event.reply(board.toString() + "\nTo place a marker on the board type  \"!tplace <row> <column>\"\n" + curPlayerName.getAsMention() + " (" + curPlayerToken + ") it is your turn!");
-                }catch(IndexOutOfBoundsException ex){
-                    event.reply("You need to provide the name as a mention");
-                }
+            if (Integer.parseInt(messageSent[1]) >= TicTacToe.MIN_NUM_COLUMNS && Integer.parseInt(messageSent[1]) <= TicTacToe.MAX_NUM_COLUMNS) {
+                columns = Integer.parseInt(messageSent[1]);
+            } else {
+                columns = 3;
+            }
+            if (Integer.parseInt(messageSent[2]) >= TicTacToe.MIN_WIN && Integer.parseInt(messageSent[2]) <= TicTacToe.MAX_WIN) {
+                win = Integer.parseInt(messageSent[2]);
+            } else {
+                win = 3;
+            }
+        }else{
+            rows = columns = win = 3;
+        }
+        event.reply(initiator.getAsMention() + ", now give me the name of the user to play against. e.g. @MustangBot");
+        waiter.waitForEvent(GuildMessageReceivedEvent.class, e -> e.getAuthor().equals(event.getAuthor()) && e.getChannel().equals(event.getChannel()), e -> {
+            try{
+                opponent = e.getMessage().getMentionedMembers().get(0);
+                board = new TicTacToe(rows, columns, win);
+                event.reply(board.toString() + "\nTo place a marker on the board type  \"!ttt place <row> <column>\"\n" + curPlayerName.getAsMention() + " (" + curPlayerToken + ") it is your turn!");
+            }catch(IndexOutOfBoundsException ex){
+                event.reply("You need to provide the name as a mention");
+            }
             }, 30, TimeUnit.SECONDS, () -> event.reply("You did not provide a user to play against fast enough. Try again."));
-        }else if(messageSent[0].equalsIgnoreCase("!tplace")){
-            if(this.board == null){
-                event.reply("Must use the !ttt command to start a Tic Tac Toe game!");
+    }
+
+    public class PlaceCommand extends Command{
+
+        public PlaceCommand(){
+            this.name = "place";
+            this.help = "Places a marker on the Tic Tac Toe board";
+            this.aliases = new String[] {"tplace"};
+            this.guildOnly = true;
+        }
+
+        @Override
+        protected void execute(CommandEvent event){
+            String[] messageSent = event.getArgs().split(" ");
+
+            if(board == null){
+                event.reply("Must use the !ttt command to start a Tic Tac Toe game first!");
             }else{
                 //Check to see if they're a valid user for this object
                 if(event.getMember() != initiator && event.getMember() != opponent){
-                    event.reply("You're not a part of this game, if you want to start your own game with another player type \"!ttt\"");
+                    event.reply("You're not a part of this game, if you want to start your own game with another player use \"!ttt\"");
                     return;
                 }
                 //If the person who is placing a marker isn't the current player then tell them to wait their turn and return out of method
@@ -78,23 +97,23 @@ public class TicTacToeCommand extends Command {
                 }
 
                 //Parsing the string for the location to place a marker
-                int row = Integer.parseInt(messageSent[1]);
-                int col = Integer.parseInt(messageSent[2]);
+                int row = Integer.parseInt(messageSent[0]);
+                int col = Integer.parseInt(messageSent[1]);
 
                 //Checking to see if the location is a valid spot i.e. it is both empty and a location on the board
                 if(!board.checkSpace(row, col)){
-                    event.reply("That space is unavailable, pick another location by re-typing  \"!tplace <row> <column>\"");
+                    event.reply("That space is unavailable, pick another location by re-typing  \"!ttt place <row> <column>\"");
                 }else{
                     //If it is a valid spot place the marker, print out the new board
                     board.placeMarker(row, col, curPlayerToken);
                     event.reply(board.toString());
                     //Check if the most recently placed spot gives a winner
                     if(board.checkForWinner(row, col, curPlayerToken)){
-                        event.reply(curPlayerName.getAsMention() + " (" + curPlayerToken + ") wins! To play again type  \"!ttt\"");
+                        event.reply(curPlayerName.getAsMention() + " (" + curPlayerToken + ") wins! To play again use  \"!ttt\"");
                         board = null;
                         //Check if the most recently placed spot results in a draw
                     }else if(board.checkForDraw()){
-                        event.reply("Game is a draw! If you want to play again type  \"!ttt\"");
+                        event.reply("Game is a draw! If you want to play again use  \"!ttt\"");
                         board = null;
                         //If isn't a win or a draw swap the current player variables for both token and name
                     }else{
@@ -103,6 +122,25 @@ public class TicTacToeCommand extends Command {
                         event.reply(curPlayerName.getAsMention() + " (" + curPlayerToken + ") it is your turn!");
                     }
                 }
+            }
+        }
+    }
+    public class QuitCommand extends Command{
+
+        public QuitCommand(){
+            this.name = "quit";
+            this.aliases = new String[] {"tquit"};
+            this.help = "Quits an ongoing Tic Tac Toe game";
+            this.guildOnly = true;
+        }
+
+        @Override
+        protected void execute(CommandEvent event){
+            if(board == null){
+                event.reply("No game was ongoing!");
+            }else{
+                board = null;
+                event.reply("Game has been quit by " + event.getMember().getAsMention() + " if you want to play another game use  \"!ttt\"");
             }
         }
     }
@@ -115,7 +153,6 @@ public class TicTacToeCommand extends Command {
             curPlayerToken = TicTacToe.PLAYER1;
         }
     }
-
     //Method to swap the name of the person who's turn it is
     private void swapCurPlayerName(){
         if(curPlayerName == initiator){

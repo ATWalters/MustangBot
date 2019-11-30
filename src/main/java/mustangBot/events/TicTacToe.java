@@ -13,11 +13,11 @@ public class TicTacToe {
     private static final char EMPTY = ' ';
     private static final String SEPARATOR = "|";
     public static final int MIN_NUM_ROWS = 3;
-    public static final int MAX_NUM_ROWS = 20;
+    public static final int MAX_NUM_ROWS = 10;
     public static final int MIN_NUM_COLUMNS = 3;
-    public static final int MAX_NUM_COLUMNS = 20;
+    public static final int MAX_NUM_COLUMNS = 10;
     public static final int MIN_WIN = 3;
-    public static final int MAX_WIN = 10;
+    public static final int MAX_WIN = 5;
 
     public TicTacToe(int r, int c, int w){
         rows = r;
@@ -75,7 +75,7 @@ public class TicTacToe {
     }
 
     public boolean checkSpace(int r, int c){
-        return board[r][c] == EMPTY && r <= MAX_NUM_ROWS && r >= MIN_NUM_ROWS && c <= MAX_NUM_COLUMNS && c >= MIN_NUM_COLUMNS;
+        return board[r][c] == EMPTY && r <= MAX_NUM_ROWS && c <= MAX_NUM_COLUMNS;
     }
 
     public void placeMarker(int r, int c, char player){
