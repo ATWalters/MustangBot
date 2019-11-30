@@ -75,7 +75,7 @@ public class TicTacToe {
     }
 
     public boolean checkSpace(int r, int c){
-        return board[r][c] == EMPTY;
+        return board[r][c] == EMPTY && r <= MAX_NUM_ROWS && r >= MIN_NUM_ROWS && c <= MAX_NUM_COLUMNS && c >= MIN_NUM_COLUMNS;
     }
 
     public void placeMarker(int r, int c, char player){
@@ -88,10 +88,10 @@ public class TicTacToe {
     }
 
     public boolean checkForWinner(int r, int c, char player){
-        return checkHorizontalWin(r, c, player) || checkVerticalWin(r, c, player) || checkDiagonalWin(r, c, player);
+        return checkHorizontalWin(r, player) || checkVerticalWin(c, player) || checkDiagonalWin(player);
     }
 
-    private boolean checkHorizontalWin(int r, int c, char player){
+    private boolean checkHorizontalWin(int r,char player){
         int inARow = 0;
 
         for(int i = 0; i < this.getCols(); i++){
@@ -107,7 +107,7 @@ public class TicTacToe {
         return false;
     }
 
-    private boolean checkVerticalWin(int r, int c, char player){
+    private boolean checkVerticalWin(int c, char player){
         int inARow = 0;
 
         for(int i = 0; i < this.getRows(); i++){
@@ -123,7 +123,7 @@ public class TicTacToe {
         return false;
     }
 
-    private boolean checkDiagonalWin(int r, int c, char player){
+    private boolean checkDiagonalWin(char player){
         int row;
         int col;
         int inARow = 0;
