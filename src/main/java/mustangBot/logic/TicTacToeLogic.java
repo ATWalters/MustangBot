@@ -1,6 +1,6 @@
 package mustangBot.logic;
 
-public class TicTacToe {
+public class TicTacToeLogic {
     private char[][] board;
     private int win;
     private int rows;
@@ -19,7 +19,7 @@ public class TicTacToe {
     public static final int MIN_WIN = 3;
     public static final int MAX_WIN = 10;
 
-    public TicTacToe(int r, int c, int w){
+    public TicTacToeLogic(int r, int c, int w){
         rows = r;
         cols = c;
         win = w;
@@ -62,9 +62,9 @@ public class TicTacToe {
                 str.append(j + 1).append(" ");
             }
             for(int k = 0; k < cols; k++) {
-                str.append(TicTacToe.SEPARATOR).append(" ").append(whatsAtPos(j, k));
+                str.append(TicTacToeLogic.SEPARATOR).append(" ").append(whatsAtPos(j, k));
             }
-            str.append(TicTacToe.SEPARATOR).append("\n");
+            str.append(TicTacToeLogic.SEPARATOR).append("\n");
         }
         str.append("```");
         return str.toString();

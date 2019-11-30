@@ -4,9 +4,9 @@ import mustangBot.logic.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class TTT extends ListenerAdapter {
+public class TicTacToeEvent extends ListenerAdapter {
 
-    private TicTacToe board;
+    private TicTacToeLogic board;
     private char curPlayer;
 
     public void onGuildMessageReceived(GuildMessageReceivedEvent event){
@@ -18,8 +18,8 @@ public class TTT extends ListenerAdapter {
         }
 
         if(messageSent[0].equalsIgnoreCase("ttt")){
-            board = new TicTacToe(3, 3, 3);
-            curPlayer = TicTacToe.PLAYER1;
+            board = new TicTacToeLogic(3, 3, 3);
+            curPlayer = TicTacToeLogic.PLAYER1;
             event.getChannel().sendMessage("To place a token on the board type   \"tplace <row> <column>\"   " +
                     "replacing the row and column with the location to place your marker " + user1).queue();
             event.getChannel().sendMessage(board.toString()).queue();
@@ -47,10 +47,10 @@ public class TTT extends ListenerAdapter {
     }
 
     private void swapPlayer(){
-        if(curPlayer == TicTacToe.PLAYER1){
-            curPlayer = TicTacToe.PLAYER2;
+        if(curPlayer == TicTacToeLogic.PLAYER1){
+            curPlayer = TicTacToeLogic.PLAYER2;
         }else{
-            curPlayer = TicTacToe.PLAYER1;
+            curPlayer = TicTacToeLogic.PLAYER1;
         }
     }
 }

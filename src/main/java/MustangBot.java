@@ -24,9 +24,9 @@ public class MustangBot {
         //Adding an event waiter
         EventWaiter waiter = new EventWaiter();
 
-        //Creating new Joke object and calling fillJokes method
-        Joke jokeListener = new Joke();
-        jokeListener.fillJokes();
+        //Creating new JokeEvent object and calling fillJokes method
+        JokeEvent jokeEventListener = new JokeEvent();
+        jokeEventListener.fillJokes();
 
         //Making a command client
         CommandClientBuilder builder = new CommandClientBuilder();
@@ -42,9 +42,9 @@ public class MustangBot {
         CommandClient client = builder.build();
 
         //Adding each event to the listener
-        jda.addEventListener(jokeListener);
-        jda.addEventListener(new Marco());
-        //jda.addEventListener(new TTT());
+        jda.addEventListener(jokeEventListener);
+        jda.addEventListener(new MarcoEvent());
+        //jda.addEventListener(new TicTacToeEvent());
         jda.addEventListener(client);
         jda.addEventListener(waiter);
     }

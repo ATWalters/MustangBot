@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import java.io.*;
 import java.util.ArrayList;
 
-public class Joke extends ListenerAdapter {
+public class JokeEvent extends ListenerAdapter {
    //ArrayList to store jokes from jokes.txt
    private ArrayList<String> jokes = new ArrayList<String>();
 
@@ -15,7 +15,7 @@ public class Joke extends ListenerAdapter {
         if(event.getAuthor().isBot()){
             return;
         }
-        if(messageSent.equalsIgnoreCase( "Joke")){
+        if(messageSent.equalsIgnoreCase( "JokeEvent")){
             int index = (int)(Math.random()*((this.jokes.size())));
             event.getChannel().sendMessage(this.jokes.get(index)).queue();
         }

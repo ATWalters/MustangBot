@@ -12,10 +12,10 @@ import java.util.concurrent.*;
 public class TicTacToeCommand extends Command {
 
     private EventWaiter waiter;
-    private TicTacToe board;
+    private TicTacToeLogic board;
     private Member initiator;
     private Member opponent;
-    private char curPlayerToken = TicTacToe.PLAYER1;
+    private char curPlayerToken = TicTacToeLogic.PLAYER1;
     private Member curPlayerName;
     private int rows;
     private int columns;
@@ -25,7 +25,7 @@ public class TicTacToeCommand extends Command {
     public TicTacToeCommand(EventWaiter w){
         this.name = "ttt";
         this.help = "Starts a game of Tic Tac Toe against another server member. Has commands place and quit. \n\tRow and column arguments must be between" +
-                " " + TicTacToe.MIN_NUM_COLUMNS + " & " + TicTacToe.MAX_NUM_COLUMNS + " and number to win between " + TicTacToe.MIN_WIN +" & " + TicTacToe.MAX_WIN;
+                " " + TicTacToeLogic.MIN_NUM_COLUMNS + " & " + TicTacToeLogic.MAX_NUM_COLUMNS + " and number to win between " + TicTacToeLogic.MIN_WIN +" & " + TicTacToeLogic.MAX_WIN;
         this.arguments = "[number of rows(optional)] [column(optional)] [number in a row to win(optional)]";
         this.guildOnly = true;
         this.waiter = w;
@@ -43,17 +43,17 @@ public class TicTacToeCommand extends Command {
         eb = new EmbedBuilder();
 
         if(messageSent.length == 3) {
-            if (Integer.parseInt(messageSent[0]) >= TicTacToe.MIN_NUM_ROWS && Integer.parseInt(messageSent[0]) <= TicTacToe.MAX_NUM_ROWS) {
+            if (Integer.parseInt(messageSent[0]) >= TicTacToeLogic.MIN_NUM_ROWS && Integer.parseInt(messageSent[0]) <= TicTacToeLogic.MAX_NUM_ROWS) {
                 rows = Integer.parseInt(messageSent[0]);
             } else {
-                rows = TicTacToe.MIN_NUM_ROWS;
+                rows = TicTacToeLogic.MIN_NUM_ROWS;
             }
-            if (Integer.parseInt(messageSent[1]) >= TicTacToe.MIN_NUM_COLUMNS && Integer.parseInt(messageSent[1]) <= TicTacToe.MAX_NUM_COLUMNS) {
+            if (Integer.parseInt(messageSent[1]) >= TicTacToeLogic.MIN_NUM_COLUMNS && Integer.parseInt(messageSent[1]) <= TicTacToeLogic.MAX_NUM_COLUMNS) {
                 columns = Integer.parseInt(messageSent[1]);
             } else {
                 columns = 3;
             }
-            if (Integer.parseInt(messageSent[2]) >= TicTacToe.MIN_WIN && Integer.parseInt(messageSent[2]) <= TicTacToe.MAX_WIN) {
+            if (Integer.parseInt(messageSent[2]) >= TicTacToeLogic.MIN_WIN && Integer.parseInt(messageSent[2]) <= TicTacToeLogic.MAX_WIN) {
                 win = Integer.parseInt(messageSent[2]);
             } else {
                 win = 3;
@@ -65,7 +65,7 @@ public class TicTacToeCommand extends Command {
         waiter.waitForEvent(GuildMessageReceivedEvent.class, e -> e.getAuthor().equals(event.getAuthor()) && e.getChannel().equals(event.getChannel()), e -> {
             try{
                 opponent = e.getMessage().getMentionedMembers().get(0);
-                board = new TicTacToe(rows, columns, win);
+                board = new TicTacToeLogic(rows, columns, win);
                 eb.setTitle("Tic Tac Toe Game Between \n" + initiator.getEffectiveName() + " & " + opponent.getEffectiveName(), "https://www.youtube.com/watch?v=USEjXNCTvcc");
                 eb.setColor(Color.CYAN);
                 eb.addField("Game Board", board.toString(), true);
@@ -159,10 +159,10 @@ public class TicTacToeCommand extends Command {
 
     //Method to swap the current player token (X or O)
     private void swapCurPlayerToken(){
-        if(curPlayerToken == TicTacToe.PLAYER1){
-            curPlayerToken = TicTacToe.PLAYER2;
+        if(curPlayerToken == TicTacToeLogic.PLAYER1){
+            curPlayerToken = TicTacToeLogic.PLAYER2;
         }else{
-            curPlayerToken = TicTacToe.PLAYER1;
+            curPlayerToken = TicTacToeLogic.PLAYER1;
         }
     }
     //Method to swap the name of the person who's turn it is
