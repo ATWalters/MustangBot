@@ -30,7 +30,6 @@ public class TicTacToeCommand extends Command {
                 new PlaceCommand()
         };
     }
-
     @Override
     protected void execute(CommandEvent event){
         String[] messageSent = event.getArgs().split(" ");
