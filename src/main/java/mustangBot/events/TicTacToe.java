@@ -13,11 +13,11 @@ public class TicTacToe {
     private static final char EMPTY = ' ';
     private static final String SEPARATOR = "|";
     public static final int MIN_NUM_ROWS = 3;
-    public static final int MAX_NUM_ROWS = 10;
+    public static final int MAX_NUM_ROWS = 20;
     public static final int MIN_NUM_COLUMNS = 3;
-    public static final int MAX_NUM_COLUMNS = 10;
+    public static final int MAX_NUM_COLUMNS = 20;
     public static final int MIN_WIN = 3;
-    public static final int MAX_WIN = 5;
+    public static final int MAX_WIN = 10;
 
     public TicTacToe(int r, int c, int w){
         rows = r;
@@ -46,23 +46,23 @@ public class TicTacToe {
 
     @Override
     public String toString(){
-        StringBuilder str = new StringBuilder("```    ");
+        StringBuilder str = new StringBuilder("```     ");
         for(int i = 0; i < cols; i++){
-            if(i <= 10){
-                str.append(i).append(" ");
+            if(i < 8){
+                str.append(i + 1).append("  ");
             }else {
-                str.append(i).append(" ");
+                str.append(i + 1).append(" ");
             }
         }
         str.append("\n");
         for(int j = 0; j < rows; j++){
-            if(j <= 10) {
-                str.append(" ").append(j).append(" ");
+            if(j < 9) {
+                str.append(" ").append(j + 1).append(" ");
             }else{
-                str.append(j);
+                str.append(j + 1).append(" ");
             }
             for(int k = 0; k < cols; k++) {
-                str.append(TicTacToe.SEPARATOR).append(whatsAtPos(j, k));
+                str.append(TicTacToe.SEPARATOR).append(" ").append(whatsAtPos(j, k));
             }
             str.append(TicTacToe.SEPARATOR).append("\n");
         }

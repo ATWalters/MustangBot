@@ -110,17 +110,17 @@ public class TicTacToeCommand extends Command {
                 int col = Integer.parseInt(messageSent[1]);
 
                 //Checking to see if the location is a valid spot i.e. it is both empty and a location on the board
-                if(!board.checkSpace(row, col)){
+                if(!board.checkSpace(row - 1, col - 1)){
                     event.reply("That space is unavailable, pick another location by re-typing  \"!ttt place <row> <column>\"");
                 }else{
                     //If it is a valid spot place the marker, print out the new board
-                    board.placeMarker(row, col, curPlayerToken);
+                    board.placeMarker(row - 1, col - 1, curPlayerToken);
                     eb.clearFields();
                     eb.addField("Game Board", board.toString(), true);
                     eb.addField("Instructions", "To place a marker on the board type:  \n\"!ttt place <row> <column>\"\n", false);
                     event.reply(eb.build());
                     //Check if the most recently placed spot gives a winner
-                    if(board.checkForWinner(row, col, curPlayerToken)){
+                    if(board.checkForWinner(row - 1, col - 1, curPlayerToken)){
                         event.reply(curPlayerName.getAsMention() + " (" + curPlayerToken + ") wins! To play again use  \"!ttt\"");
                         board = null;
                         //Check if the most recently placed spot results in a draw
