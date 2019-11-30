@@ -37,6 +37,8 @@ public class MustangBot {
         //Adding commands to the CommandClientBuilder
         builder.addCommand(new InviteCommand());
         builder.addCommand(new TicTacToeCommand(waiter));
+        builder.addCommand(new ConnectFourCommand(waiter));
+        builder.addCommand(new MagicEightBallCommand());
 
         //Building the CommandClient
         CommandClient client = builder.build();

@@ -10,8 +10,12 @@ public class ConnectFourCommand extends Command {
     public ConnectFourCommand(EventWaiter w) {
         this.name = "c4";
         this.help = "Starts a Connect Four game with another server member";
-        this.aliases = new String[] {"four", "cf"};
+        this.aliases = new String[] {"cf"};
         this.waiter = w;
     }
 
+    @Override
+    protected void execute(CommandEvent event){
+
+    }
 }

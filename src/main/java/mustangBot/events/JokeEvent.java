@@ -15,7 +15,7 @@ public class JokeEvent extends ListenerAdapter {
         if(event.getAuthor().isBot()){
             return;
         }
-        if(messageSent.equalsIgnoreCase( "JokeEvent")){
+        if(messageSent.equalsIgnoreCase( "joke")){
             int index = (int)(Math.random()*((this.jokes.size())));
             event.getChannel().sendMessage(this.jokes.get(index)).queue();
         }

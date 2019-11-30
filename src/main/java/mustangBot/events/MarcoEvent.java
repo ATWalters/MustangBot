@@ -10,7 +10,7 @@ public class MarcoEvent extends ListenerAdapter {
         if(event.getAuthor().isBot()){
             return;
         }
-        if(messageSent.equalsIgnoreCase("MarcoEvent")){
+        if(messageSent.equalsIgnoreCase("marco")){
             event.getChannel().sendMessage("Polo!").queue();
         }
     }
