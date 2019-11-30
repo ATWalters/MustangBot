@@ -3,8 +3,10 @@ package mustangBot.commands;
 import com.jagrosh.jdautilities.command.*;
 import com.jagrosh.jdautilities.commons.waiter.*;
 import mustangBot.events.*;
+import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.*;
+import java.awt.*;
 import java.util.concurrent.*;
 
 public class TicTacToeCommand extends Command {
@@ -18,10 +20,12 @@ public class TicTacToeCommand extends Command {
     private int rows;
     private int columns;
     private int win;
+    private EmbedBuilder eb;
 
     public TicTacToeCommand(EventWaiter w){
         this.name = "ttt";
-        this.help = "Starts a game of Tic Tac Toe against another server member. Has commands place and quit.";
+        this.help = "Starts a game of Tic Tac Toe against another server member. Has commands place and quit. \n\tRow and column arguments must be between" +
+                " " + TicTacToe.MIN_NUM_COLUMNS + " & " + TicTacToe.MAX_NUM_COLUMNS + " and number to win between " + TicTacToe.MIN_WIN +" & " + TicTacToe.MAX_WIN;
         this.arguments = "[number of rows(optional)] [column(optional)] [number in a row to win(optional)]";
         this.guildOnly = true;
         this.waiter = w;
@@ -36,6 +40,7 @@ public class TicTacToeCommand extends Command {
 
         initiator = event.getMember();
         curPlayerName = initiator;
+        eb = new EmbedBuilder();
 
         if(messageSent.length == 3) {
             if (Integer.parseInt(messageSent[0]) >= TicTacToe.MIN_NUM_ROWS && Integer.parseInt(messageSent[0]) <= TicTacToe.MAX_NUM_ROWS) {
@@ -61,7 +66,12 @@ public class TicTacToeCommand extends Command {
             try{
                 opponent = e.getMessage().getMentionedMembers().get(0);
                 board = new TicTacToe(rows, columns, win);
-                event.reply(board.toString() + "\nTo place a marker on the board type  \"!ttt place <row> <column>\"\n" + curPlayerName.getAsMention() + " (" + curPlayerToken + ") it is your turn!");
+                eb.setTitle("Tic Tac Toe Game Between \n" + initiator.getEffectiveName() + " & " + opponent.getEffectiveName(), "https://www.youtube.com/watch?v=USEjXNCTvcc");
+                eb.setColor(Color.CYAN);
+                eb.addField("Game Board", board.toString(), true);
+                eb.addField("Instructions", "To place a marker on the board type:  \n\"!ttt place <row> <column>\"\n", false);
+                event.reply(eb.build());
+                event.reply(curPlayerName.getAsMention() + " (" + curPlayerToken + ") it is your turn!");
             }catch(IndexOutOfBoundsException ex){
                 event.reply("You need to provide the name as a mention");
             }
@@ -105,7 +115,10 @@ public class TicTacToeCommand extends Command {
                 }else{
                     //If it is a valid spot place the marker, print out the new board
                     board.placeMarker(row, col, curPlayerToken);
-                    event.reply(board.toString());
+                    eb.clearFields();
+                    eb.addField("Game Board", board.toString(), true);
+                    eb.addField("Instructions", "To place a marker on the board type:  \n\"!ttt place <row> <column>\"\n", false);
+                    event.reply(eb.build());
                     //Check if the most recently placed spot gives a winner
                     if(board.checkForWinner(row, col, curPlayerToken)){
                         event.reply(curPlayerName.getAsMention() + " (" + curPlayerToken + ") wins! To play again use  \"!ttt\"");
