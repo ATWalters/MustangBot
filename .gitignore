@@ -5,6 +5,7 @@
 .idea
 token.txt
 client.txt
+clientid.txt
 /gradle/
 build.gradle
 gradlew
