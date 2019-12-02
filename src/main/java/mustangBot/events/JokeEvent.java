@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class JokeEvent extends ListenerAdapter {
    //ArrayList to store jokes from jokes.txt
-   private ArrayList<String> jokes = new ArrayList<String>();
+   private ArrayList<String> jokes = new ArrayList<>();
 
     public void onGuildMessageReceived(GuildMessageReceivedEvent event){
         String messageSent = event.getMessage().getContentRaw();
@@ -23,7 +23,7 @@ public class JokeEvent extends ListenerAdapter {
 
     //Method that fills the array with jokes from the file jokes.txt
     public void fillJokes() throws IOException {
-        File file = new File("D:\\School\\Programming\\Projects\\MustangBot\\jokes.txt");
+        File file = new File("D:\\CS Side Projects\\MustangBot\\jokes.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
 
         String st;

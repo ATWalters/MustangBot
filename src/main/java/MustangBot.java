@@ -11,13 +11,13 @@ public class MustangBot {
     public static void main(String[] args) throws Exception{
 
         //Reading discord bot token from token.txt and building new jda using that token
-        File file = new File("D:\\School\\Programming\\Projects\\MustangBot\\token.txt");
+        File file = new File("D:\\CS Side Projects\\MustangBot\\token.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         String token = br.readLine();
         JDA jda = new JDABuilder( token ).build();
 
         //Reading discord client id from client.txt and adding that to the command client
-        File file2 = new File("D:\\School\\Programming\\Projects\\MustangBot\\client.txt");
+        File file2 = new File("D:\\CS Side Projects\\MustangBot\\client.txt");
         BufferedReader br2 = new BufferedReader(new FileReader(file2));
         String id = br2.readLine();
 
