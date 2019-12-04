@@ -10,6 +10,9 @@ public class ConnectFourLogic {
         COLUMNS = c;
     }
 
+    private void placeMarker(int r, int c, char player){
+
+    }
 
 
 }
