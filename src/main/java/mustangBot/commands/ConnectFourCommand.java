@@ -12,7 +12,7 @@ public class ConnectFourCommand extends Command {
 
     public ConnectFourCommand(EventWaiter w) throws IOException {
         this.name = "c4";
-        this.help = "Starts a Connect Four game with another server member";
+        this.help = "!!!NOT AVAILABLE YET!!!\nStarts a Connect Four game with another server member";
         this.aliases = new String[] {"cf"};
         this.waiter = w;
     }
