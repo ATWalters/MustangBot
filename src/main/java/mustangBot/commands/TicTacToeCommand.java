@@ -24,7 +24,7 @@ public class TicTacToeCommand extends Command {
 
     public TicTacToeCommand(EventWaiter w){
         this.name = "ttt";
-        this.help = "Starts a game of Tic Tac Toe against another server member. Has commands place and quit. \n\tRow and column arguments must be between" +
+        this.help = "\nStarts a game of TicTacToe with another member.\nRow and column arguments must be between" +
                 " " + TicTacToeLogic.MIN_NUM_COLUMNS + " & " + TicTacToeLogic.MAX_NUM_COLUMNS + " and number to win between " + TicTacToeLogic.MIN_WIN +" & " + TicTacToeLogic.MAX_WIN;
         this.arguments = "[number of rows(optional)] [column(optional)] [number in a row to win(optional)]";
         this.guildOnly = true;
