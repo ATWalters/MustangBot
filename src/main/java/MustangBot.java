@@ -49,5 +49,6 @@ public class MustangBot {
         //jda.addEventListener(new TicTacToeEvent());
         jda.addEventListener(client);
         jda.addEventListener(waiter);
+        jda.addEventListener(new OurEvent());
     }
 }
